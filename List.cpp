@@ -10,11 +10,35 @@ class List::Node //self-referential Node class
 	public:
 	   int data = 0;
 	   Node* link = nullptr;
+
+ Node()//default constructor
+	 {
+		 data = 0;
+		 link = nullptr;
+	  }
+
+Node(int new_data)//an overloaded constructor
+	  { 
+		 data = new_data;
+		 link = nullptr;
+	  }
+	  
+	 Node(int new_data, Node* new_link)//another overloaded constructor
+	 {
+		 data = new_data;
+		 link = new_link;
+
+	  } 
 	   //link is a data member which is a pointer 
 	   //to an object of the same type (i.e. Node)
 	
 	};//end Node class definition (can only be seen by the List class)
 
+List::List()
+{	
+    frontPtr = nullptr;
+    num_elements = 0;
+}
 
 List::~List()
 {
@@ -92,4 +116,21 @@ void List::remove(int k)
 	}
 	
 	//Implementations of missing operations
+        int List::get(int k)
+{
+	if ( k > num_elements or k<1)
+		throw out_of_range("List::get(" +to_string(k)+") failed. (values indicates are 1 to"+to_string(num_elements+1)+")");
+
+		Node* tmpPtr = frontPtr;
+		for(int i = 1; i!= k;i++)
+		{
+			tmpPtr=tmpPtr->link;
+		}
+return tmpPtr->data;
+}
+	void List::clear()
+	{
+		while(num_elements > 0)
+		remove(1);
+}
 	
